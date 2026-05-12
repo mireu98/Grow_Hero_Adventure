@@ -8,11 +8,10 @@ public class UpgradeData
     public string name;
     public int level = 1;
     public long baseCost = 100;    // 시작 가격
-    public float costMultiplier = 1.15f; // 레벨당 가격 상승률 (15%씩 상승)
+    public float costMultiplier = 1.15f; // 레벨당 가격 상승률
     public float upgradeStep = 10f; // 레벨당 상승할 능력치 양
     public int maxLevel = -1; 
 
-    // 현재 레벨에 맞는 가격 계산식
     public long GetCurrentCost()
     {
         return (long)(baseCost * Mathf.Pow(costMultiplier, level - 1));
@@ -30,7 +29,7 @@ public class UpgradeManager : MonoBehaviour
     public List<UpgradeSlot> slotUIList = new List<UpgradeSlot>();
 
     [Header("Gacha Settings")]
-    public GameObject[] allyPrefabs; // 3종류의 동료 프리팹 (인스펙터에서 등록)
+    public GameObject[] allyPrefabs; // 동료 프리팹
     public Transform slot1;          // 동료가 생성될 첫 번째 위치
     public Transform slot2;          // 동료가 생성될 두 번째 위치
 
@@ -38,7 +37,7 @@ public class UpgradeManager : MonoBehaviour
 
     [Header("Player Levels")]
     public PlayerData[] levelDatas; // 인스펙터에서 LV1~LV6을 순서대로 드래그
-    private int currentLevelIndex = 0; // 현재 0번(LV1) 데이터 사용 중
+    private int currentLevelIndex = 0;
     private List<int> currentAllyIndices = new List<int>();
 
     public StatDetail StatDetail;
@@ -72,7 +71,7 @@ public class UpgradeManager : MonoBehaviour
 
         long cost = data.GetCurrentCost();
 
-        // --- [2단계] 골드 체크 및 결제 ---
+        // --- 골드 체크 및 결제 ---
         if (GameManager.Instance.gold >= cost)
         {
             GameManager.Instance.gold -= (int)cost;
@@ -184,12 +183,12 @@ public class UpgradeManager : MonoBehaviour
                 }
                 break;
 
-            case 1: // Attack Speed (공격 속도)
+            case 1: // Attack Speed
                 player.attackSpeedBonus += step;
                 StatDetail.UpdateStatDetail();
                 break;
 
-            case 2: // Gold Bonus (골드 보너스)
+            case 2: // Gold Bonus
                 player.goldBonus += step;
                 StatDetail.UpdateStatDetail();
                 break;
@@ -199,13 +198,13 @@ public class UpgradeManager : MonoBehaviour
                 StatDetail.UpdateStatDetail();
                 break;
 
-            case 4: // Critical Damage (치명타 데미지)
+            case 4: // Critical Damage
                 player.critDamageMultiplier += step;
                 StatDetail.UpdateStatDetail();
                 break;
 
-            case 5: // Gacha (동료 뽑기)
-                    // 1. 랜덤하게 동료 선택
+            case 5: // Gacha
+                    // 랜덤하게 동료 선택
                 int randomIndex = Random.Range(0, allyPrefabs.Length);
                 currentAllyIndices.Add(randomIndex);
                 GameObject selectedAlly = allyPrefabs[randomIndex];

@@ -5,7 +5,7 @@ using TMPro;
 public class StatDetail : MonoBehaviour
 {
     public RawImage playerPreviewImage; // UI의 Raw Image 연결
-    public Transform spawnPoint;        // PreviewCamera 앞의 소환 위치 (PreviewScene 내부)
+    public Transform spawnPoint;        // PreviewCamera 앞의 소환 위치
     private GameObject currentPreview;
     public TMP_Text Damage;
     public TMP_Text AttackSpeed;
@@ -16,7 +16,7 @@ public class StatDetail : MonoBehaviour
 
     public void ToggleWindow()
     {
-        // 1. 현재 상태의 반대로 설정 (켜져 있으면 끄고, 꺼져 있으면 킴)
+        // 1. 현재 상태의 반대로 설정
         bool isActive = !gameObject.activeSelf;
         gameObject.SetActive(isActive);
 
@@ -35,7 +35,7 @@ public class StatDetail : MonoBehaviour
         GameObject currentPrefab = player.data.modelPrefab;
 
         // 1. 모델 생성 및 갱신 로직
-        // 모델이 없거나, 현재 플레이어의 프리팹이 이전에 생성한 프리팹과 다를 때 (레벨업 등)
+        // 모델이 없거나, 현재 플레이어의 프리팹이 이전에 생성한 프리팹과 다를 때
         if (currentPreview == null || lastPrefab != currentPrefab)
         {
             // 기존 모델이 있다면 제거
@@ -55,7 +55,7 @@ public class StatDetail : MonoBehaviour
             }
         }
 
-        // 2. 스텟 텍스트 정보 실시간 갱신 (기존 코드와 동일)
+        // 2. 스텟 텍스트 정보 실시간 갱신
         Damage.text = "Damage : " + player.data.damage;
 
         float calculatedCooldown = player.data.attackRate / (1f + player.attackSpeedBonus);

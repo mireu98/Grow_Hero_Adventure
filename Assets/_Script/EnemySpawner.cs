@@ -31,7 +31,7 @@ public class EnemySpawner : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject); // 중복 생성된 스패너 파괴
+            Destroy(gameObject);
             return;
         }
     }
@@ -40,14 +40,9 @@ public class EnemySpawner : MonoBehaviour
     {
         if (stageDataList == null || stageDataList.Count == 0)
         {
-            Debug.Log("[시스템] 리스트가 비어있어 Resources에서 데이터를 로드합니다.");
 
-            // Resources 폴더 바로 아래에 StageData들이 있다면 ""를, 
-            // 만약 Resources/Stages 폴더 안에 있다면 "Stages"라고 적으세요.
             StageData[] loadedData = Resources.LoadAll<StageData>("");
             stageDataList = new List<StageData>(loadedData);
-
-            Debug.Log($"[시스템] 로드된 스테이지 개수: {stageDataList.Count}");
         }
 
         yield return new WaitForSeconds(0.6f);
@@ -59,7 +54,6 @@ public class EnemySpawner : MonoBehaviour
             {
                 int idx = Mathf.Clamp(MapManager.Instance.currentIdx, 0, stageDataList.Count - 1);
                 currentStage = stageDataList[idx];
-                Debug.Log($"[시스템] {idx}번 스테이지로 시작합니다.");
             }
         }
 
@@ -72,7 +66,6 @@ public class EnemySpawner : MonoBehaviour
             if (btnObj != null)
             {
                 bossEntryButton = btnObj.GetComponent<Button>();
-                Debug.Log("[성공] 코드로 BossButton을 찾아서 연결했습니다.");
             }
         }
 
@@ -84,7 +77,6 @@ public class EnemySpawner : MonoBehaviour
 
     IEnumerator SpawnRoutine()
     {
-        // 게임 시작 직후 잠시 대기 (다른 매니저들 초기화 시간 확보)
         yield return new WaitForSeconds(0.5f);
 
         while (true)
@@ -99,7 +91,6 @@ public class EnemySpawner : MonoBehaviour
         // 리스트가 비어있는지 먼저 확인
         if (stageDataList == null || stageDataList.Count == 0)
         {
-            Debug.LogError("스패너의 StageDataList가 비어있습니다! 인스펙터를 확인하세요.");
             return;
         }
 
@@ -107,14 +98,12 @@ public class EnemySpawner : MonoBehaviour
         int safeIndex = Mathf.Clamp(stageIndex, 0, stageDataList.Count - 1);
         currentStage = stageDataList[safeIndex];
 
-        Debug.Log($"[성공] currentStage가 {safeIndex}번 데이터로 할당되었습니다.");
     }
 
     void InitTimerUI()
     {
         if (timerObject == null)
         {
-            // HPUI를 찾은 뒤 그 자식인 Timer를 찾습니다.
             GameObject hpUI = GameObject.FindWithTag("HPUI");
             if (hpUI != null)
             {
@@ -130,7 +119,7 @@ public class EnemySpawner : MonoBehaviour
 
     IEnumerator BossTimerRoutine()
     {
-        InitTimerUI(); // 타이머 컴포넌트 연결 확인
+        InitTimerUI();
 
         float timer = bossTimeLimit;
         if (timerObject != null) timerObject.SetActive(true); // 타이머 켜기
@@ -158,7 +147,6 @@ public class EnemySpawner : MonoBehaviour
 
     void SpawnMonster()
     {
-        // 1. 만약 데이터가 없다면 수단과 방법을 가리지 않고 찾아옵니다.
         if (currentStage == null)
         {
             Debug.LogWarning("Current Stage is Null! 복구를 시작합니다.");
@@ -170,7 +158,7 @@ public class EnemySpawner : MonoBehaviour
                 return;
             }
 
-            // MapManager에서 현재 인덱스를 가져와서 강제 할당
+            // MapManager에서 현재 인덱스를 가져와서 할당
             if (MapManager.Instance != null)
             {
                 int idx = Mathf.Clamp(MapManager.Instance.currentIdx, 0, stageDataList.Count - 1);
@@ -179,10 +167,8 @@ public class EnemySpawner : MonoBehaviour
             }
         }
 
-        // 2. 복구 후에도 데이터가 없다면 실행 중단
         if (currentStage == null) return;
 
-        // 3. 실제 소환 로직
         if (!isBossMode && GameManager.Instance != null && !GameManager.Instance.isFighting)
         {
             Spawn(currentStage.normalEnemies);
@@ -218,11 +204,11 @@ public class EnemySpawner : MonoBehaviour
             Destroy(enemy);
         }
 
-        // 2. 상태 초기화 (OnBossDefeated와 유사하지만 스테이지는 넘기지 않음)
+        // 2. 상태 초기화
         isBossMode = false;
         if (bossEntryButton != null) bossEntryButton.interactable = true;
 
-        // 3. 전투 상태 해제 (캐릭터가 다시 뛰기 시작함)
+        // 3. 전투 상태 해제
         if (GameManager.Instance != null)
         {
             GameManager.Instance.SetBattleState(false);

@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
         InitPlayer();
     }
 
-    // 데이터 기반으로 플레이어 초기화 (외형 생성 등)
+    // 데이터 기반으로 플레이어 초기화
     public void InitPlayer()
     {
         // 1. 기존에 혹시 있을지 모를 모델링 자식 삭제
@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
         if (data != null && data.modelPrefab != null)
         {
             GameObject model = Instantiate(data.modelPrefab, transform);
-            model.transform.localPosition = Vector3.zero; // 부모 위치에 딱 맞춤
+            model.transform.localPosition = Vector3.zero;
 
             // 3. 새로 생성된 모델의 애니메이터 연결
             anim = model.GetComponent<Animator>();
@@ -87,7 +87,6 @@ public class PlayerController : MonoBehaviour
             if (isCritical)
             {
                 finalDamage *= critDamageMultiplier;
-                Debug.Log($"<color=red>Critical Hit!</color> 데미지: {finalDamage}");
             }
 
             enemyObj.GetComponent<Enemy>().TakeDamage(finalDamage, isCritical);
@@ -106,6 +105,5 @@ public class PlayerController : MonoBehaviour
     {
         data = newData;   // 새로운 SO 할당
         InitPlayer();     // 모델링 및 애니메이터 재설정
-        Debug.Log($"플레이어가 {newData.name} 데이터로 변경되었습니다.");
     }
 }

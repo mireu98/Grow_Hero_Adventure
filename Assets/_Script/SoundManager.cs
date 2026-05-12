@@ -14,11 +14,11 @@ public class SoundManager : MonoBehaviour
         float bgmVol = PlayerPrefs.GetFloat("BGMVolume", 1f);
         float sfxVol = PlayerPrefs.GetFloat("SFXVolume", 1f);
 
-        // 2. 슬라이더 위치 초기화
+        //슬라이더 위치 초기화
         bgmSlider.value = bgmVol;
         sfxSlider.value = sfxVol;
 
-        // 3. 실제 믹서에 적용
+        //실제 믹서에 적용
         SetBGMVolume(bgmVol);
         SetSFXVolume(sfxVol);
     }
@@ -26,7 +26,6 @@ public class SoundManager : MonoBehaviour
     // BGM 슬라이더에 연결할 함수
     public void SetBGMVolume(float volume)
     {
-        // volume이 0일 때는 확실하게 -80dB(음소거)로 보냅니다.
         if (volume <= 0.0001f)
         {
             mainMixer.SetFloat("BGMVolume", -80f);

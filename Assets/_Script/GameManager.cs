@@ -52,6 +52,7 @@ public class GameManager : MonoBehaviour
         isFighting = false;
     }
 
+    // 강제 종료해도 저장
     private void OnApplicationPause(bool pause)
     {
         if (pause) SaveGame();
@@ -97,12 +98,10 @@ public class GameManager : MonoBehaviour
     {
         if (goldText != null)
         {
-            // 그냥 gold.ToString() 대신 변환 함수를 거칩니다.
             goldText.text = FormatGold(gold);
         }
     }
 
-    // 숫자를 K, M, B 단위로 바꿔주는 마법의 함수
     string FormatGold(long amount)
     {
         if (amount >= 1000000000) // 10억 이상
@@ -136,7 +135,6 @@ public class GameManager : MonoBehaviour
             buttonImage.sprite = speed1xSprite;
         }
 
-        // [주의] 배속을 올려도 FixedUpdate(물리)가 튀지 않게 설정 (권장)
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
     }
 
@@ -151,7 +149,7 @@ public class GameManager : MonoBehaviour
             data.stageIndex = MapManager.Instance.currentIdx;
         }
         var player = PlayerController.Instance;
-        data.currentLevelIndex = UpgradeManager.Instance.GetCurrentLevelIndex(); // index 가져오기용 함수 필요
+        data.currentLevelIndex = UpgradeManager.Instance.GetCurrentLevelIndex();
         data.attackSpeedBonus = player.attackSpeedBonus;
         data.goldBonus = player.goldBonus;
         data.critChance = player.critChance;
@@ -167,11 +165,9 @@ public class GameManager : MonoBehaviour
 
         // 2. JSON으로 변환 후 저장
         string json = JsonUtility.ToJson(data);
-        Debug.Log($"저장 데이터 확인: {json}");
         PlayerPrefs.SetString("SaveSlot_1", json);
         PlayerPrefs.Save();
 
-        Debug.Log("모든 데이터 저장 완료!");
     }
 
     public void LoadGame()
@@ -209,19 +205,15 @@ public class GameManager : MonoBehaviour
                 AddGold(rewardGold);
             }
         }
-
-        Debug.Log("모든 데이터 로드 완료!");
     }
 
     public void OnClickExitBtn()
     {
         // 1. 데이터 저장 실행
         SaveGame();
-        Debug.Log("게임 데이터 저장 완료");
 
         // 2. 게임 종료 실행
 #if UNITY_EDITOR
-        // 유니티 에디터 상에서 플레이 모드를 끕니다.
         UnityEditor.EditorApplication.isPlaying = false;
 #else
         Application.Quit();

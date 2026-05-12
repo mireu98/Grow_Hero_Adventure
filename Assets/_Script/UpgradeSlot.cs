@@ -9,7 +9,6 @@ public class UpgradeSlot : MonoBehaviour
 
     public void OnClickUpgrade()
     {
-        // 매니저에게 나 클릭됐어! 라고 알림
         UM.BuyUpgrade(upgradeIndex);
     }
 

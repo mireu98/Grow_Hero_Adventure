@@ -6,7 +6,7 @@ public class MapManager : MonoBehaviour
     public static MapManager Instance;
 
     [Header("Stage Settings")]
-    public List<GameObject> stages; // Stage1, 2, 3, 4 넣어주세요
+    public List<GameObject> stages; // Stage1, 2, 3, 4
     public int currentIdx = 0;
 
     [Header("Scroll Settings")]
@@ -28,17 +28,14 @@ public class MapManager : MonoBehaviour
 
     void Update()
     {
-        // GameManager에서 전투 중(isFighting)이면 스크롤 안 함
         if (GameManager.Instance != null && GameManager.Instance.isFighting) return;
 
-        // 현재 스테이지의 자식들(배경 3장)을 이동시킴
         if (currentBGTransforms != null)
         {
             foreach (Transform bg in currentBGTransforms)
             {
                 bg.Translate(Vector3.left * scrollSpeed * Time.deltaTime);
 
-                // 루프 처리
                 if (bg.position.x <= -bgWidth)
                 {
                     Vector3 pos = bg.position;

@@ -47,10 +47,9 @@ public class AllyController : MonoBehaviour
         float baseDmg = data.damage;
 
         // 2. 플레이어가 "업그레이드만으로" 올린 추가 데미지 수치를 가져옴
-        // (PlayerController에 별도로 저장해두는 것이 편합니다)
         float playerBonusDmg = PlayerController.Instance.data.damage;
 
-        // 3. 플레이어 보너스 데미지에 동료 각자의 비율(예: 0.2f)을 곱함
+        // 3. 플레이어 보너스 데미지에 동료 각자의 비율을 곱함
         float allyBonus = playerBonusDmg * 0.3f;
 
         // 4. 최종 합산

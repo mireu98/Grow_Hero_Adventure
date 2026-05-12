@@ -13,8 +13,7 @@ public class Enemy : MonoBehaviour
     private Transform player;
     private bool isDead = false;
     private bool isBoss = false;
-    
-    // 이제 인스펙터에서 할당하지 않고 코드로 받아옵니다.
+ 
     private EnemySpawner spawner;
 
     [Header("UI Reference")]
@@ -38,10 +37,7 @@ public class Enemy : MonoBehaviour
         // --- 모델 프리팹 생성 로직 ---
         if (data != null && data.modelPrefab != null)
         {
-            // 1. 모델 생성 (내 자식으로 설정)
             GameObject model = Instantiate(data.modelPrefab, transform.position, Quaternion.identity, transform);
-            
-            // 2. 위치 초기화 (부모인 빈 오브젝트 위치에 딱 붙게)
             model.transform.localPosition = Vector3.zero;
         }
 
@@ -67,21 +63,18 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
-        // 태그로 플레이어 찾기
         var playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null) player = playerObj.transform;
     }
 
     void Update()
     {
-        // 사망했거나 플레이어를 못 찾았으면 중단
         if (isDead || player == null) return;
 
         float dist = Vector2.Distance(transform.position, player.position);
 
         if (dist > stopDistance)
         {
-            // 왼쪽으로 이동 (플레이어가 왼쪽에 있을 때)
             transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
         }
         else
@@ -99,8 +92,7 @@ public class Enemy : MonoBehaviour
         if (isDead) return;
         if (!isHPVisible) ShowHPUI();
         currentHp -= damage;
-        
-        // 자식으로 생성된 모델의 애니메이터를 찾아서 트리거 실행
+
         Animator anim = GetComponentInChildren<Animator>();
         if (anim != null) anim.SetTrigger("3_Damaged");
 
@@ -148,7 +140,6 @@ public class Enemy : MonoBehaviour
 
         if (GameManager.Instance != null) GameManager.Instance.SetBattleState(false);
 
-        // 보스가 죽었을 때만 스패너에게 보고
         if (isBoss && spawner != null)
         {
             spawner.OnBossDefeated();
