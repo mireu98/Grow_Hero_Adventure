@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa5356996db98eb478fa8548fcaf124b, type: 3}
+  m_Name: Archer
+  m_EditorClassIdentifier: Assembly-CSharp::AllyData
+  allyName: Archer
+  modelPrefab: {fileID: 9158167135536924216, guid: 24f9789f962964a0ea5c4fbedc52161a, type: 3}
+  damage: 200
+  attackRate: 2.5
+  AttackSound: {fileID: 8300000, guid: 2dd5b6c1d9af4dc44a2e336b16fc9ebb, type: 3}
+  isRanged: 1
+  projectilePrefab: {fileID: 161766660727748596, guid: 05ce920d629922a4eb4795ef7494ce5c, type: 3}

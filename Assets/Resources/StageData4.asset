@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74ee8bdb7416e24409bb05cc101bacdf, type: 3}
+  m_Name: StageData4
+  m_EditorClassIdentifier: Assembly-CSharp::StageData
+  stageLevel: 4
+  normalEnemies: {fileID: 11400000, guid: f1420ceb2998a1841a8b2e1f80b097cd, type: 2}
+  bossEnemy: {fileID: 11400000, guid: 990589222c3268d409cd269abcbc46d7, type: 2}

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4585bc9a6e970a54896f771537bb7a40, type: 3}
+  m_Name: LV1
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerData
+  characterName: Player
+  level: 1
+  damage: 100
+  attackRate: 2
+  modelPrefab: {fileID: 4744537460265103821, guid: 79d6e86fda7674749baa509978485b91, type: 3}
+  projectilePrefab: {fileID: 0}
